@@ -26,22 +26,22 @@ def is_red_in_center(mask):
     return np.any(mask > 0)
 
 def main():
+    screen_width, screen_height = pyautogui.size()
 
+    # Вычисляем координаты центра экрана
+    center_x, center_y = screen_width // 2, screen_height // 2
+    half_box = CENTER_BOX_SIZE // 2
+
+    # Захватываем только центральную область экрана
+    region = (
+        center_x - half_box,
+        center_y - half_box,
+        CENTER_BOX_SIZE,
+        CENTER_BOX_SIZE,
+    )
     while True:
         # Получаем размеры экрана
-        screen_width, screen_height = pyautogui.size()
 
-        # Вычисляем координаты центра экрана
-        center_x, center_y = screen_width // 2, screen_height // 2
-        half_box = CENTER_BOX_SIZE // 2
-
-        # Захватываем только центральную область экрана
-        region = (
-            center_x - half_box,
-            center_y - half_box,
-            CENTER_BOX_SIZE,
-            CENTER_BOX_SIZE,
-        )
         screenshot = pyautogui.screenshot(region=region)
         frame = np.array(screenshot)
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
